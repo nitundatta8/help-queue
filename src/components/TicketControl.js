@@ -2,12 +2,21 @@ import React from 'react'
 import TicketList from './TicketList'
 import NewTicketForm from './NewTicketForm'
 
+
 class TicketControl extends React.Component {
   constructor(probs) {
     super(probs);
     this.state = {
-      formVisibleOnPage: false
+      formVisibleOnPage: false,
+      masterTicketList: []
     };
+  }
+  handleAddingNewTicketToList = (newTicket) => {
+    const newMasterTicketList = this.state.masterTicketList.concat(newTicket);
+    this.setState({
+      masterTicketList: newMasterTicketList,
+      formVisibleOnPage: false
+    });
   }
   handleClick = () => {
     this.setState(prevState => ({
@@ -19,10 +28,12 @@ class TicketControl extends React.Component {
     let currentlyVisibleState = null;
     let buttonText = null;
     if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <NewTicketForm />
+      currentlyVisibleState = <NewTicketForm onNewTicketCreation={this.handleAddingNewTicketToList} /> // new code in this line }
+      // if (this.state.formVisibleOnPage) {
+      //   currentlyVisibleState = <NewTicketForm />
       buttonText = "Return to Ticket List";
     } else {
-      currentlyVisibleState = <TicketList />
+      currentlyVisibleState = <TicketList ticketList={this.state.masterTicketList} />
       buttonText = "Add Tricket";
     }
     return (
