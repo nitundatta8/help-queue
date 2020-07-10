@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './App.css';
-import Hearder from './Header';
+import Header from './Header';
 
 import TicketControl from './TicketControl'
 
