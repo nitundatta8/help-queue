@@ -12,27 +12,33 @@ class TicketControl extends React.Component {
   constructor(probs) {
     super(probs);
     this.state = {
-      //formVisibleOnPage: false,
-      // masterTicketList: [],
+
       selectedTicket: null,
       editing: false
     };
   };
-  // componentDidMount() {
-  //   this.waitTimeUpdateTimer = setInterval(() => this.updateTicketElapsedWaitTime(), 1000);
-  // }
-  // componentDidUpdate() {
-  //   console.log("component updated!");
-  // }
+  componentDidMount() {
+    this.waitTimeUpdateTimer = setInterval(() => this.updateTicketElapsedWaitTime(), 6000);
+  }
+  componentDidUpdate() {
+    console.log("component updated!");
+  }
 
-  // componentWillUnmount() {
-  //   console.log("component unmounted!");
-  //   clearInterval(this.waitTimeUpdateTimer);
-  // }
+  componentWillUnmount() {
+    console.log("component unmounted!");
+    clearInterval(this.waitTimeUpdateTimer);
+  }
 
-  // updateTicketElapsedWaitTime = () => {
-  //   console.log("tick");
-  // }
+  updateTicketElapsedWaitTime = () => {
+    console.log("tick");
+    const { dispatch } = this.props;
+    Object.values(this.props.masterTicketList).forEach(ticket => {
+      const newFormattedWaitTime = ticket.timeOpen.fromNow(true);
+      const action = a.updateTime(ticket.id, newFormattedWaitTime);
+      console.log("ddd")
+      dispatch(action);
+    });
+  }
 
   handleAddingNewTicketToList = (newTicket) => {
     //const newMasterTicketList = this.state.masterTicketList.concat(newTicket);
